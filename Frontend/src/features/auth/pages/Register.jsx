@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { useAuth } from "../hook/useAuth";
+import { useNavigate } from "react-router";
 
 const Register = () => {
+  const { handleRegister } = useAuth();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
@@ -18,9 +23,11 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    const { fullname, email, password, contact, isSeller } = formData; 
+    await handleRegister({ fullname, email, password, contact, isSeller });
+    navigate("/")
   };
 
   return (
