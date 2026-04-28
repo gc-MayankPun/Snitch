@@ -28,7 +28,7 @@ async function sendTokenResponse(user, res, message) {
 }
 
 export const register = async (req, res) => {
-  const { fullname, email, password, contact } = req.body;
+  const { fullname, email, password, contact, isSeller } = req.body;
 
   try {
     const existingUser = await userModel.findOne({
@@ -39,8 +39,14 @@ export const register = async (req, res) => {
         .status(400)
         .json({ message: "User with this email or contact already exists" });
     }
-    
-    const user = await userModel.create({ fullname, email, password, contact });
+
+    const user = await userModel.create({
+      fullname,
+      email,
+      password,
+      contact,
+      role: isSeller ? "seller" : "buyer",
+    });
     await sendTokenResponse(user, res, "User registered successfully");
   } catch (error) {
     console.error(error);
