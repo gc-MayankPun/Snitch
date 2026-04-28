@@ -26,3 +26,11 @@ export const validateRegisterUser = [
   body("isSeller").isBoolean().withMessage("isSeller must be a boolean value"),
   validateRequest,
 ];
+
+export const validateLoginUser = [
+  body("email").isEmail().withMessage("Invalid email format"),
+  body("password")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters long"),
+  validateRequest,
+];
