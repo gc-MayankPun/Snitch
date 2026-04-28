@@ -39,7 +39,7 @@ export const register = async (req, res) => {
         .status(400)
         .json({ message: "User with this email or contact already exists" });
     }
-
+    
     const user = await userModel.create({ fullname, email, password, contact });
     await sendTokenResponse(user, res, "User registered successfully");
   } catch (error) {
