@@ -72,7 +72,7 @@ export const login = async (req, res) => {
         .json({ success: false, message: "Invalid email or password" });
     }
 
-    await sendTokenResponse(user, req, "User logged in successfully");
+    await sendTokenResponse(user, res, "User logged in successfully");
   } catch (error) {}
   return {};
 };
