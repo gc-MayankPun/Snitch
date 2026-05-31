@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { useAuth } from "../hook/useAuth";
 import { useNavigate } from "react-router";
+import ContinueWithGoogle from "../components/ContinueWithGoogle";
 
 const Register = () => {
   const { handleRegister } = useAuth();
@@ -371,12 +372,19 @@ const Register = () => {
       {/* Brand Panel */}
       <div className="auth-brand">
         <div className="brand-content">
-          <div className="brand-logo"><span>Snitch</span></div>
+          <div className="brand-logo">
+            <span>Snitch</span>
+          </div>
           <p className="brand-tagline">
             The platform where <em>truth travels fast</em> and sellers thrive.
           </p>
           <div className="brand-features">
-            {["Verified marketplace for genuine products", "Seller dashboard with real-time analytics", "Secure payments & buyer protection", "Community-driven reviews & ratings"].map((f) => (
+            {[
+              "Verified marketplace for genuine products",
+              "Seller dashboard with real-time analytics",
+              "Secure payments & buyer protection",
+              "Community-driven reviews & ratings",
+            ].map((f) => (
               <div key={f} className="brand-feature">
                 <div className="feature-dot" />
                 <span>{f}</span>
@@ -399,7 +407,9 @@ const Register = () => {
             {/* Full Name + Contact side-by-side */}
             <div className="form-grid">
               <div className="form-group">
-                <label htmlFor="fullname" className="form-label">Full Name</label>
+                <label htmlFor="fullname" className="form-label">
+                  Full Name
+                </label>
                 <input
                   id="fullname"
                   name="fullname"
@@ -413,7 +423,9 @@ const Register = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="contact" className="form-label">Contact</label>
+                <label htmlFor="contact" className="form-label">
+                  Contact
+                </label>
                 <input
                   id="contact"
                   name="contact"
@@ -430,7 +442,9 @@ const Register = () => {
 
             {/* Email */}
             <div className="form-group">
-              <label htmlFor="email" className="form-label">Email</label>
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
               <input
                 id="email"
                 name="email"
@@ -446,7 +460,9 @@ const Register = () => {
 
             {/* Password */}
             <div className="form-group">
-              <label htmlFor="password" className="form-label">Password</label>
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
               <input
                 id="password"
                 name="password"
@@ -463,14 +479,18 @@ const Register = () => {
             {/* Seller Toggle */}
             <div
               className={`seller-toggle${formData.isSeller ? " active" : ""}`}
-              onClick={() => setFormData((prev) => ({ ...prev, isSeller: !prev.isSeller }))}
+              onClick={() =>
+                setFormData((prev) => ({ ...prev, isSeller: !prev.isSeller }))
+              }
             >
               <div className="toggle-switch">
                 <div className="toggle-knob" />
               </div>
               <div className="seller-label-wrap">
                 <div className="seller-label-title">Register as a Seller</div>
-                <div className="seller-label-sub">List products & manage your storefront</div>
+                <div className="seller-label-sub">
+                  List products & manage your storefront
+                </div>
               </div>
             </div>
 
@@ -481,11 +501,12 @@ const Register = () => {
                 {isLoading ? "Creating Account…" : "Create Account"}
               </span>
             </button>
+
+            <ContinueWithGoogle />
           </form>
 
           <p className="form-footer">
-            Already have an account?{" "}
-            <Link to="/login">Sign in</Link>
+            Already have an account? <Link to="/login">Sign in</Link>
           </p>
         </div>
       </div>
