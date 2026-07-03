@@ -8,6 +8,7 @@ import { config } from "./config/config.js";
 
 // Routes
 import authRouter from "./routes/auth.routes.js";
+import productRouter from "./routes/product.routes.js"
 
 const app = express();
 
@@ -41,5 +42,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/products", productRouter);
 
 export default app;
