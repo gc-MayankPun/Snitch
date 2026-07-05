@@ -1,7 +1,7 @@
-import { body } from "express-validator";
+import { body, validationResult } from "express-validator";
 
 function validateRequest(req, res, next) {
-  const errors = validateRequest(req);
+  const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     return res
