@@ -19,13 +19,14 @@ export const useAuth = () => {
       contact,
       isSeller,
     });
-    console.log(data);
     dispatch(setUser(data.user));
+    return data.user;
   }
 
   async function handleLogin({ email, password }) {
     const data = await login({ email, password });
     dispatch(setUser(data.user));
+    return data.user;
   }
 
   async function handleGetMe() {

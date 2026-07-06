@@ -30,9 +30,16 @@ const Register = () => {
     e.preventDefault();
     setIsLoading(true);
     const { fullname, email, password, contact, isSeller } = formData;
-    await handleRegister({ fullname, email, password, contact, isSeller });
+    const user = await handleRegister({
+      fullname,
+      email,
+      password,
+      contact,
+      isSeller,
+    });
     setIsLoading(false);
-    navigate("/");
+    if (user.role === "buyer") navigate("/");
+    else if (user.role === "seller") navigate("/seller/dashboard");
   };
 
   return (
