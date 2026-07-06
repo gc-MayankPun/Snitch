@@ -34,11 +34,19 @@ export async function getSellerProduct(req, res) {
   const seller = req.user;
 
   const products = await productModel.find({ seller: seller._id });
-  res
-    .status(200)
-    .json({
-      message: "Products fetched successfully",
-      success: true,
-      products,
-    });
+  res.status(200).json({
+    message: "Products fetched successfully",
+    success: true,
+    products,
+  });
+}
+
+export async function getAllproducts(req, res) {
+  const products = await productModel.find();
+
+  return res.status(200).json({
+    message: "Product fetched successfully",
+    success: true,
+    products,
+  });
 }
