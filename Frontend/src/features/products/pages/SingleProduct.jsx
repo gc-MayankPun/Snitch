@@ -5,7 +5,7 @@ import { useProduct } from "../hook/useProduct";
 
 const SingleProduct = () => {
   const { productId } = useParams();
-  const { handleGetProductDetails } = useProduct();
+  const { handleGetProductDetails, handleAddToCartProduct } = useProduct();
   const productDetail = useSelector((state) => state.product.productDetail);
   const user = useSelector((state) => state.auth?.user);
   const navigate = useNavigate();
@@ -15,12 +15,16 @@ const SingleProduct = () => {
 
   const nextImage = (e) => {
     e.stopPropagation();
-    setActiveImage((prev) => (prev === (productDetail?.images?.length || 0) - 1 ? 0 : prev + 1));
+    setActiveImage((prev) =>
+      prev === (productDetail?.images?.length || 0) - 1 ? 0 : prev + 1,
+    );
   };
 
   const prevImage = (e) => {
     e.stopPropagation();
-    setActiveImage((prev) => (prev === 0 ? (productDetail?.images?.length || 0) - 1 : prev - 1));
+    setActiveImage((prev) =>
+      prev === 0 ? (productDetail?.images?.length || 0) - 1 : prev - 1,
+    );
   };
 
   useEffect(() => {
@@ -123,7 +127,7 @@ const SingleProduct = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start">
           {/* Left: Images */}
           <div className="flex flex-col gap-3">
-            <div 
+            <div
               className="w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] bg-[#141414] rounded-[16px] overflow-hidden border border-[#1e1e1e] relative group cursor-pointer"
               onClick={() => images.length > 0 && setIsPreviewOpen(true)}
             >
@@ -136,17 +140,41 @@ const SingleProduct = () => {
                   />
                   {images.length > 1 && (
                     <>
-                      <button 
+                      <button
                         onClick={prevImage}
                         className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-[#F5C518] hover:text-black text-white p-1.5 md:p-2 rounded-full backdrop-blur-sm transition-all opacity-80 md:opacity-0 md:group-hover:opacity-100"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
                       </button>
-                      <button 
+                      <button
                         onClick={nextImage}
                         className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-[#F5C518] hover:text-black text-white p-1.5 md:p-2 rounded-full backdrop-blur-sm transition-all opacity-80 md:opacity-0 md:group-hover:opacity-100"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
                       </button>
                     </>
                   )}
@@ -165,15 +193,20 @@ const SingleProduct = () => {
                   const isLastSlot = index === 3;
                   const extraImagesCount = images.length - 4;
                   const isExtra = isLastSlot && extraImagesCount > 0;
-                  const isActive = activeImage === index || (activeImage >= 3 && isLastSlot);
-                  
+                  const isActive =
+                    activeImage === index || (activeImage >= 3 && isLastSlot);
+
                   return (
                     <div
                       key={index}
                       className={`relative w-full aspect-square rounded-lg overflow-hidden border transition-all cursor-pointer ${
-                        isActive ? 'border-[#F5C518] opacity-100' : 'border-[#1e1e1e] opacity-60 hover:opacity-100'
+                        isActive
+                          ? "border-[#F5C518] opacity-100"
+                          : "border-[#1e1e1e] opacity-60 hover:opacity-100"
                       }`}
-                      onClick={() => isExtra ? setIsPreviewOpen(true) : setActiveImage(index)}
+                      onClick={() =>
+                        isExtra ? setIsPreviewOpen(true) : setActiveImage(index)
+                      }
                     >
                       <img
                         src={img.url}
@@ -228,7 +261,10 @@ const SingleProduct = () => {
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 mt-auto">
-              <button className="flex-1 bg-[#1a1a1a] border border-[#333] hover:border-[#555] text-[#e5e2e1] py-2.5 md:py-3 px-5 md:px-6 rounded-lg text-sm md:text-base font-medium transition-all flex items-center justify-center gap-2 hover:bg-[#222]">
+              <button
+                onClick={() => handleAddToCartProduct(productDetail._id)}
+                className="flex-1 bg-[#1a1a1a] border border-[#333] hover:border-[#555] text-[#e5e2e1] py-2.5 md:py-3 px-5 md:px-6 rounded-lg text-sm md:text-base font-medium transition-all flex items-center justify-center gap-2 hover:bg-[#222]"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -314,35 +350,72 @@ const SingleProduct = () => {
       {/* Image Preview Modal */}
       {isPreviewOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md">
-          <button 
+          <button
             onClick={() => setIsPreviewOpen(false)}
             className="absolute top-6 right-6 text-white hover:text-[#F5C518] transition-colors"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
-          
+
           <div className="relative w-full max-w-5xl max-h-[90vh] px-4 flex items-center justify-center">
             {images.length > 1 && (
-              <button 
+              <button
                 onClick={prevImage}
                 className="absolute left-4 md:left-12 bg-black/50 hover:bg-[#F5C518] hover:text-black text-white p-3 rounded-full backdrop-blur-sm transition-all"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
               </button>
             )}
-            
-            <img 
-              src={images[activeImage]?.url} 
-              alt={productDetail.title} 
+
+            <img
+              src={images[activeImage]?.url}
+              alt={productDetail.title}
               className="max-w-full max-h-[85vh] object-contain rounded-md"
             />
 
             {images.length > 1 && (
-              <button 
+              <button
                 onClick={nextImage}
                 className="absolute right-4 md:right-12 bg-black/50 hover:bg-[#F5C518] hover:text-black text-white p-3 rounded-full backdrop-blur-sm transition-all"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
               </button>
             )}
           </div>

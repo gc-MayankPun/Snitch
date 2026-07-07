@@ -1,3 +1,4 @@
+import cartModel from "../models/cart.model.js";
 import productModel from "../models/product.model.js";
 import { uploadFile } from "../services/storage.service.js";
 
@@ -60,4 +61,15 @@ export async function getSingleProduct(req, res) {
     success: true,
     product,
   });
+}
+
+export async function addProductToCart(req, res) {
+  const cart = await cartModel.create({
+    user: req.user._id,
+    product: req.params.productId,
+  });
+
+  return res
+    .status(200)
+    .json({ message: "Item added to the cart", success: true, cart });
 }

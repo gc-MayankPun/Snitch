@@ -24,3 +24,8 @@ export async function getProductDetails(productId) {
   const response = await productApiInstance.get(`/product/${productId}`);
   return response.data;
 }
+
+export async function addProductToCart(productId) {
+  const response = await productApiInstance.post(`/cart/${productId}`);
+  return response.data;
+}
