@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authenticateSeller } from "../middlewares/auth.middleware.js";
-import { createProduct, getAllproducts, getSellerProduct } from "../controllers/product.controller.js";
+import { createProduct, getAllproducts, getSellerProduct, getSingleProduct } from "../controllers/product.controller.js";
 import { createProductValidator } from "../validator/product.validator.js";
 import multer from "multer";
 
@@ -18,5 +18,7 @@ router.post("/", authenticateSeller, upload.array("images", 7), createProductVal
 router.get("/seller", authenticateSeller, getSellerProduct)
 
 router.get("/", getAllproducts)
+
+router.get("/product/:productId", getSingleProduct)
 
 export default router;

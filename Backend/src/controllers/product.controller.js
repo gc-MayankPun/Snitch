@@ -50,3 +50,14 @@ export async function getAllproducts(req, res) {
     products,
   });
 }
+
+export async function getSingleProduct(req, res) {
+  const { productId } = req.params;
+  const product = await productModel.findById(productId);
+
+  return res.status(200).json({
+    message: "Product fetched successfully",
+    success: true,
+    product,
+  });
+}

@@ -15,7 +15,12 @@ export async function getSellerProduct() {
   return response.data;
 }
 
-export async function getAllProducts(){
-  const response = await productApiInstance.get("/"); 
+export async function getAllProducts() {
+  const response = await productApiInstance.get("/");
+  return response.data;
+}
+
+export async function getProductDetails(productId) {
+  const response = await productApiInstance.get(`/product/${productId}`);
   return response.data;
 }
