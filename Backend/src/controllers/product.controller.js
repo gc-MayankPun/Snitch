@@ -63,7 +63,7 @@ export async function getSingleProduct(req, res) {
   });
 }
 
-export async function addProductToCart(req, res) {
+export async function addProductToCart(req, res) { 
   const cart = await cartModel.create({
     user: req.user._id,
     product: req.params.productId,

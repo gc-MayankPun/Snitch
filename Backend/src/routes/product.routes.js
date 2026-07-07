@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authenticateSeller } from "../middlewares/auth.middleware.js";
+import { authenticateSeller, authenticateUser } from "../middlewares/auth.middleware.js";
 import { createProduct, getAllproducts, getSellerProduct, getSingleProduct, addProductToCart } from "../controllers/product.controller.js";
 import { createProductValidator } from "../validator/product.validator.js";
 import multer from "multer";
@@ -21,6 +21,6 @@ router.get("/", getAllproducts)
 
 router.get("/product/:productId", getSingleProduct)
 
-router.post("/cart/:productId", addProductToCart)
+router.post("/cart/:productId", authenticateUser, addProductToCart)
 
 export default router;

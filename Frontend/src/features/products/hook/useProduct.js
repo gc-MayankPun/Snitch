@@ -31,7 +31,7 @@ export const useProduct = () => {
   async function handleAddToCartProduct(productId){
     const data = await addProductToCart(productId);
     dispatch(setCartItems(data.cart))
-    return data.product
+    return data.cart;
   }
 
   return { handleCreateProduct, handleGetSellerProduct, handleGetAllProducts, handleGetProductDetails, handleAddToCartProduct };
